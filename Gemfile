@@ -20,6 +20,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views', '~> 1.0'
+gem 'stripe'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
