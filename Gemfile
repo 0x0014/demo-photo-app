@@ -21,6 +21,9 @@ gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views', '~> 1.0'
 gem 'stripe'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'fog'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

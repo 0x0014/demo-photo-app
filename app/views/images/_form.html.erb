@@ -1,0 +1,109 @@
+<%= form_for @image, :html => { multipart: true, :class => "form-horizontal image" } do |f| %>
+
+<% if @image.errors.any? %>
+
+<div id="error_expl" class="panel panel-danger">
+
+<div class="panel-heading">
+
+<h3 class="panel-title"><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h3>
+
+</div>
+
+<div class="panel-body">
+
+<ul>
+
+<% @image.errors.full_messages.each do |msg| %>
+
+<li><%= msg %></li>
+
+<% end %>
+
+</ul>
+
+</div>
+
+</div>
+
+<% end %>
+
+<div class="control-group">
+
+<%= f.label :name, :class => 'control-label' %>
+
+<div class="controls">
+
+<%= f.text_field :name, :class => 'form-control' %>
+
+</div>
+
+<%= error_span(@image[:name]) %>
+
+</div>
+
+<div class="control-group">
+
+<%= f.label :picture, :class => 'control-label' %>
+
+<div class="controls">
+
+<%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
+
+</div>
+
+<%= error_span(@image[:picture]) %>
+
+</div>
+
+<%= f.submit nil, :class => 'btn btn-primary' %>
+
+<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+
+images_path, :class => 'btn btn-default' %>
+
+<% end %>
+
+Update your create action in the images_controller.rb file under app/controllers folder by adding the line below under @image = Image.new...:
+
+@image.user = current_user
+
+To display the image in the show page, open the show.html.erb file under app/views/images folder and update it as follows:
+
+<%- model_class = Image -%>
+
+<div class="page-header">
+
+<h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+
+</div>
+
+<dl class="dl-horizontal">
+
+<dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+
+<dd><%= @image.name %></dd>
+
+<dt></dt>
+
+<dd><%= image_tag(@image.picture.url, size: "300x300") if @image.picture? %></dd>
+
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+
+images_path, :class => 'btn btn-default' %>
+
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+
+edit_image_path(@image), :class => 'btn btn-default' %>
+
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+
+image_path(@image),
+
+:method => 'delete',
+
+:data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+
+:class => 'btn btn-danger' %>
