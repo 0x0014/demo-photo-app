@@ -64,46 +64,13 @@ images_path, :class => 'btn btn-default' %>
 
 <% end %>
 
-Update your create action in the images_controller.rb file under app/controllers folder by adding the line below under @image = Image.new...:
+<script type="text/javascript">
+	$('#image_picture').bind('change', function() {
+		var size_in_megabytes = this.files[0].size/1024/1024;
+		if (size_in_megabytes > 5) {
+			alert('Maximum file size is 5mb');
+		}
+	});
+</script>
 
-@image.user = current_user
 
-To display the image in the show page, open the show.html.erb file under app/views/images folder and update it as follows:
-
-<%- model_class = Image -%>
-
-<div class="page-header">
-
-<h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
-
-</div>
-
-<dl class="dl-horizontal">
-
-<dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-
-<dd><%= @image.name %></dd>
-
-<dt></dt>
-
-<dd><%= image_tag(@image.picture.url, size: "300x300") if @image.picture? %></dd>
-
-</dl>
-
-<%= link_to t('.back', :default => t("helpers.links.back")),
-
-images_path, :class => 'btn btn-default' %>
-
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
-
-edit_image_path(@image), :class => 'btn btn-default' %>
-
-<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-
-image_path(@image),
-
-:method => 'delete',
-
-:data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-
-:class => 'btn btn-danger' %>
